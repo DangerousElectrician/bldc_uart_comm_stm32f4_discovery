@@ -1,0 +1,22 @@
+modify bldc_interface_uart.c and bldc_interface_uart.h for other platforms
+	and can bus can be handled here
+		actually modify comm_uart.c I read the blog post wrong
+		leave bldc_interface_uart.c alone
+	this is going to be a bit trickier than I thought
+		everything was written with the assumption of microcontroller
+		motor movement commands need to be called periodically 
+		Method I want to do it is by using the periodic sending function of socketcan
+			this api does not make that easy
+			talon srx was easy because the can bus functions closely matched socketcan functions
+				the sendmessage command included a period parameter
+			Maybe use a loop in a higher level part of the code
+http://vedder.se/2015/10/communicating-with-the-vesc-using-uart/
+
+https://github.com/faraday-motion/bldc_uart_comm_stm32f4_discovery
+	claims to have removed chibios dependency, doesn't seem complete
+	only headers commentted out, makefile still uses stuff from chibios which is how I think the rest of the chibios stuff still compiles
+
+bldc_interface_uart doesn't seem to be the place to change things
+	it calls stuff from packet.c
+	comm_uart.c is where the interaction with the uart hardware takes place
+	bldc_interface_uart is initialized with a pointer to a function that handles the serial communication
