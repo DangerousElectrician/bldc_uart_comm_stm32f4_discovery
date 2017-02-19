@@ -1,4 +1,4 @@
-INCLUDES = -I"include"
+#INCLUDES = -I"include"
 CXX=g++
 CFLAGS=-c -Wall
 LDFLAGS= -Wall
